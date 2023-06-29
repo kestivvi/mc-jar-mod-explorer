@@ -27,7 +27,7 @@ export default function Home() {
                 const json = JSON.parse(xhr.responseText);
                 const hash = json.filehash;
 
-                window.location.href = `http://localhost:3000/${hash}`;
+                window.location.href = `/${hash}`;
             } else {
                 console.error("Error uploading files. Please try again.");
                 setError('Error uploading files. Please try again.');
