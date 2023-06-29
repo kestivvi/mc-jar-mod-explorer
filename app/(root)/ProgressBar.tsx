@@ -1,3 +1,5 @@
+'use client'
+
 import "./ProgressBar.css"
 
 export default function ProgressBar({ value }: { value: number }) {
