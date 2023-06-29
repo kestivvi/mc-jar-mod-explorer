@@ -3,11 +3,23 @@ input[type="file"] {
 }
 
 .custom-file-upload {
-    width: 10rem;
-    padding: 10px 20px;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+
+    position: relative;
+
+    height: 3rem;
+    width: 15rem;
+    /* padding: 10px 20px; */
     background: #4CAF50;
     color: white;
     cursor: pointer;
+
+
+    -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 0.2);
+    -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 0.2);
+    box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 0.2);
 }
 
 .custom-file-upload:hover {
@@ -20,4 +32,12 @@ button[type="submit"] {
     background: #4CAF50;
     color: white;
     cursor: pointer;
+
+    -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 0.2);
+    -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 0.2);
+    box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 0.2);
+}
+
+button[type="submit"]:hover {
+    background: #45a049;
 }

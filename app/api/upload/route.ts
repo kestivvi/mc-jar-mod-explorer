@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import JSZip from 'jszip';
 
+import PocketBase from 'pocketbase';
+
+
 // Interface for the response object
 interface Response {
     filehash: string;
@@ -40,6 +43,30 @@ export async function POST(request: Request) {
         }
 
         console.log('fabric.mod.json content:', fabricModJson);
+
+        const json = JSON.parse(fabricModJson);
+
+        const pb = new PocketBase('http://127.0.0.1:8090');
+
+        const resultList = await pb.collection('mods').getList(1, 1, {
+            filter: `hash = "${hash}"`,
+        });
+
+        if (resultList.totalItems == 0) {
+
+            const data = {
+                "hash": hash,
+                "modId": json.id,
+                "name": json.name,
+                "description": json.description,
+                "version": json.version,
+                "license": json.license,
+                "authors": json.authors.join(", "),
+                "json": json
+            };
+
+            await pb.collection('mods').create(data);
+        }
 
         // Create the response object with the file hash
         const response: Response = { filehash: hash };
