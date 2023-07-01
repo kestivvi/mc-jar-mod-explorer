@@ -4,6 +4,7 @@ import { useState } from 'react';
 import FileUpload from './(root)/FileUpload'
 import ProgressBar from './(root)/ProgressBar';
 import ErrorComponent from './(components)/ErrorComponent';
+import Greet from './Greet';
 
 export default function Home() {
     const [progressPercent, setProgressPercent] = useState(0);
@@ -46,9 +47,8 @@ export default function Home() {
 
     return (
         <div className='m-20 flex flex-col justify-center items-center gap-12'>
-            <div className='flex justify-center items-center text-lg'>
-                This website tool enables you to analyze an unknown Minecraft mod by uploading its JAR file.
-            </div>
+            <Greet />
+
 
             <FileUpload onFileSubmit={onFileSubmit} />
 

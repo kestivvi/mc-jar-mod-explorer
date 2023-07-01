@@ -1,10 +1,18 @@
 export default function NavBar() {
     return (
-        <nav>
-            <div className="p-3 flex justify-center gap-10 items-center border-b-slate-600 shadow-xl">
-                <a href="/"><img className="w-10" src="logo.png" alt="logo" /></a>
-                <a href="/"><h1 className="font-bold text-xl">Minecraft JAR mod explorer</h1></a>
+        <div className="p-3 flex justify-between items-center">
+            <div className="flex items-center gap-8">
+                <a href="/" className="flex items-center gap-6">
+                    <img className="w-8" src="pickaxe-green.png" alt="logo" />
+                </a>
+                <nav className="flex items-center gap-4">
+                    <a href="/">Home</a>
+                    <a href="/last-uploaded">Last uploaded</a>
+                </nav>
             </div>
-        </nav>
+            <div>
+                Day/Night
+            </div>
+        </div>
     )
 }
