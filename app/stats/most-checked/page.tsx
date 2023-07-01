@@ -1,20 +1,19 @@
 import PocketBase from 'pocketbase';
-import Record from './Record';
-
-import { Mod, columns } from "./columns"
-import { DataTable } from "./data-table"
+import { Mod, columns } from "../columns"
+import { DataTable } from "../data-table"
 
 async function getData(): Promise<Mod[]> {
     const pb = new PocketBase('http://127.0.0.1:8090');
 
     return await pb.collection('mods').getFullList({
-        sort: '-last_checked',
+        sort: '-times_checked',
+        filter: "times_checked > 0",
         batch: 1
     });
 }
 
 
-export default async function LastUploaded() {
+export default async function MostChecked() {
 
     const data = await getData();
 
