@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import "./FileUpload.css"
 import ErrorComponent from '../(components)/ErrorComponent';
-
+import { DragEvent, DragEventHandler } from 'react';
 
 function validateFile(file: File | null): string | null {
     if (!file)
@@ -42,12 +42,40 @@ export default function FileUpload(
         setError("");
     }
 
+    const handleDrag: DragEventHandler<HTMLDivElement> = (event) => {
+        event.preventDefault();
+    }
+
+    function handleDrop(event: DragEvent) {
+        event.preventDefault();
+
+        if (!event.dataTransfer || event.dataTransfer.files.length == 0) {
+            console.error("How did you drop no files? 🧐");
+        }
+
+        if (event.dataTransfer.files.length > 1) {
+            console.error("You can drop only one file!");
+        }
+
+        setSelectedFile(event.dataTransfer.files[0]);
+
+        console.log(event.dataTransfer?.files);
+    }
+
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center gap-8">
-            <label className="custom-file-upload flex justify-center items-center">
-                <input type="file" accept='.jar' name="file" onChange={handleFileChange} />
-                <div>{selectedFile ? selectedFile.name : "Upload jar file"}</div>
-            </label>
+        <form onSubmit={handleSubmit} className="w-full flex flex-col justify-center items-center gap-8">
+            <div
+                className='p-8 w-full border-dashed border-2 rounded-lg flex flex-col justify-center items-center gap-8'
+                draggable
+                onDragOver={handleDrag}
+                onDrop={handleDrop}
+            >
+                <img className='w-28' src="scan.png" alt="scan icon" />
+                <label className="custom-file-upload flex justify-center items-center">
+                    <input type="file" accept='.jar' name="file" onChange={handleFileChange} />
+                    <div>{selectedFile ? selectedFile.name : "Upload jar file"}</div>
+                </label>
+            </div>
 
             <button type="submit">Submit</button>
 

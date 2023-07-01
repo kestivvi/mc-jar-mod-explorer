@@ -16,10 +16,12 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={inter.className}>
+            <body className={inter.className + ""}>
                 <NavBar />
-                <main>
-                    {children}
+                <main className='flex flex-col items-center justify-center'>
+                    <div className='w-5/8 flex flex-col items-center justify-center'>
+                        {children}
+                    </div>
                 </main>
             </body>
         </html>
