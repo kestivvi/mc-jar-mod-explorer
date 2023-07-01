@@ -15,6 +15,8 @@ interface mod {
     name: string;
     modId: string;
     authors: string;
+    times_checked: number;
+    last_checked: Date;
     json: object;
 }
 
@@ -56,12 +58,26 @@ export default async function Page({ params }: { params: { mod_hash: string } })
     console.log(result);
 
     console.log(params.mod_hash);
+    const formattedLastChecked = result?.last_checked
+        ? new Date(result.last_checked).toLocaleString('en-US', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            timeZone: 'UTC',
+        })
+        : '';
     return (
         <div className="flex flex-col justify-center items-center">
 
             <div className="mt-10 p-4 rounded-xl flex flex-col justify-center items-center border border-gray-300 bg-white shadow-md">
                 <h1 className="font-semibold text-4xl">General</h1>
                 <div className="flex flex-col justify-start items-start">
+                    {/* I want this date to be formatted as string */}
+                    <Field name="Last Checked">{formattedLastChecked}</Field>
+                    <Field name="Number of times checked">{result?.times_checked}</Field>
                     <Field name="Name">{result?.name}</Field>
                     <Field name="Id">{result?.modId}</Field>
                     <Field name="Version">{result?.version}</Field>

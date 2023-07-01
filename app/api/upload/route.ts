@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import JSZip from 'jszip';
-
 import PocketBase from 'pocketbase';
 
 
@@ -29,7 +28,7 @@ export async function POST(request: Request) {
 
         // Calculate the hash of the file
         const hash = await calculateFileHash(file);
-        console.log("File hash:", hash);
+        // console.log("File hash:", hash);
 
         // Load the jar file as a zip
         const jarBuffer = await file.arrayBuffer();
@@ -42,7 +41,7 @@ export async function POST(request: Request) {
             return NextResponse.error();
         }
 
-        console.log('fabric.mod.json content:', fabricModJson);
+        // console.log('fabric.mod.json content:', fabricModJson);
 
         const json = JSON.parse(fabricModJson);
 
@@ -52,6 +51,7 @@ export async function POST(request: Request) {
             filter: `hash = "${hash}"`,
         });
 
+        console.log(`Total items: ${resultList.totalItems}`);
         if (resultList.totalItems == 0) {
 
             const data = {
@@ -62,10 +62,25 @@ export async function POST(request: Request) {
                 "version": json.version,
                 "license": json.license,
                 "authors": json.authors.join(", "),
+                "times_checked": 1,
+                "last_checked": new Date().toISOString(),
                 "json": json
             };
 
+            console.log(`New Date: ${data}`);
             await pb.collection('mods').create(data);
+        } else {
+            const times_checked = resultList.items[0].$export().times_checked;
+
+            // TODO: Possible data race with `times_checked`
+            const data_updated = {
+                "times_checked": times_checked + 1,
+                "last_checked": new Date().toISOString(),
+            }
+
+            console.log(`Updated Date: ${JSON.stringify(data_updated)}`);
+            const id = resultList.items[0].id;
+            await pb.collection("mods").update(id, data_updated);
         }
 
         // Create the response object with the file hash
