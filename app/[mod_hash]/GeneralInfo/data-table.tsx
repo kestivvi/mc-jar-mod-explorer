@@ -34,7 +34,7 @@ export function DataTable<TData, TValue>({
     return (
         <div className="rounded-md border">
             <Table>
-                <TableHeader>
+                {/* <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (
                         <TableRow key={headerGroup.id}>
                             {headerGroup.headers.map((header) => {
@@ -51,14 +51,13 @@ export function DataTable<TData, TValue>({
                             })}
                         </TableRow>
                     ))}
-                </TableHeader>
+                </TableHeader> */}
                 <TableBody>
                     {table.getRowModel().rows?.length ? (
                         table.getRowModel().rows.map((row) => (
                             <TableRow
                                 key={row.id}
                                 data-state={row.getIsSelected() && "selected"}
-                            // TODO On click href
                             >
                                 {row.getVisibleCells().map((cell) => (
                                     <TableCell key={cell.id}>

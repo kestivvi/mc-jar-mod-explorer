@@ -64,7 +64,10 @@ export async function POST(request: Request) {
                 "authors": json.authors.join(", "),
                 "times_checked": 1,
                 "last_checked": new Date().toISOString(),
-                "json": json
+                "json": json,
+                "size_bytes": file.size,
+                // TODO: virus total
+                "virus_total_link": "https://www.virustotal.com/gui/home/upload",
             };
 
             console.log(`New Date: ${data}`);

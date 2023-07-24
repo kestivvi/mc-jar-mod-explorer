@@ -1,0 +1,14 @@
+.item {
+    color: black;
+    font-weight: 600;
+    padding: 0.7rem 1.5rem;
+}
+
+.item:hover {
+    cursor: pointer;
+}
+
+.selected {
+    color: #68b74a;
+    border-bottom: 3px solid #68b74a;
+}
